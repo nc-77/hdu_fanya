@@ -19,7 +19,7 @@ jobs:
         go-version: 1.15
 
     - name: Build
-      run: go build -v -o fanya . && ./fanya
+      run: go build -v -o Todo . && ./Todo
 
     - name: Send mail
       uses: dawidd6/action-send-mail@v2
