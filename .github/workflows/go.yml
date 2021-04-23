@@ -33,3 +33,4 @@ jobs:
         body: file://./page/email.html
         to: 291993554@qq.com
         from: nic
+        content_type: text/html
