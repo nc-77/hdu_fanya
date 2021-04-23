@@ -3,10 +3,6 @@ name: Go
 on:
   workflow_dispatch:
     branches: [ main ]
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   schedule:
     - cron: '0 23 * * *'
 jobs:

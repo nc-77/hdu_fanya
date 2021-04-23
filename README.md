@@ -2,6 +2,8 @@
 
 本仓库实现了一个HDU泛雅平台学习通上未完成作业的定时邮件提示系统
 
+![](https://img.nc-77.top/20210423221544.png)
+
 ## 配置
 
 1. Fork本[仓库](https://github.com/nc-77/hdu_fanya)
