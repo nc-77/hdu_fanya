@@ -33,6 +33,6 @@ jobs:
         password: ${{secrets.MAIL_PASSWORD}}
         subject: fanya todo notification
         body: file://./page/email.html
-        to: 291993554@qq.com
+        to: ${{secrets.MAIL_ADDRESS}}
         from: nic
         content_type: text/html
