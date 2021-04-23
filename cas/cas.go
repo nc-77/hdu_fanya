@@ -1,9 +1,9 @@
 package cas
 
 import (
-	"github.com/go-ini/ini"
 	"github.com/imroc/req"
 	"github.com/pkg/errors"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -22,12 +22,15 @@ type Session struct {
 }
 
 func (s *Session) setSession() error {
-	cfg, err := ini.Load("config.ini")
-	if err != nil {
-		return err
-	}
-	s.user = cfg.Section("cas").Key("user").String()
-	s.passwd = cfg.Section("cas").Key("passwd").String()
+	//cfg, err := ini.Load("config.ini")
+	//if err != nil {
+	//	return err
+	//}
+	//s.user = cfg.Section("cas").Key("user").String()
+	//s.passwd = cfg.Section("cas").Key("passwd").String()
+
+	s.user=os.Args[1]
+	s.passwd=os.Args[2]
 	s.Request = req.New()
 
 	return nil
