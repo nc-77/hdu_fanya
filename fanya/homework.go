@@ -21,7 +21,7 @@ func (fy *fanya) GetHomeworks(courses []Course) error {
 	if err := fy.getHwUrl(courses); err != nil {
 		return err
 	}
-	for i, _ := range courses {
+	for i := range courses {
 		resp, err := fy.Session.Request.Get(courses[i].hwUrl, req.Header{
 			"User-Agent": userAgent,
 		})

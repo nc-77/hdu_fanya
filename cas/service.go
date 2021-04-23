@@ -5,8 +5,8 @@ import (
 )
 
 type Service interface {
-	GetServiceUrl()string
-	Login(string)error
+	GetServiceUrl() string
+	Login(string) error
 }
 
 func Login() (*Session, error) {
@@ -27,9 +27,8 @@ func (s *Session) ServiceLogin(svc Service) error {
 	if err != nil {
 		return err
 	}
-	if err:= svc.Login(resp.String());err!=nil{
+	if err := svc.Login(resp.String()); err != nil {
 		return err
 	}
 	return nil
 }
-
