@@ -5,7 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
+  schedule:
+    - cron: '*/0 7 * * *'
 jobs:
 
   build:
@@ -29,6 +30,6 @@ jobs:
         username: ${{secrets.MAIL_USERNAME}}
         password: ${{secrets.MAIL_PASSWORD}}
         subject: fanya todo notification
-        body: file://todo.txt
+        body: file://./page/email.html
         to: 291993554@qq.com
         from: nic

@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36"
-	casUrl    = "https://cas.hdu.edu.cn/cas/login"
-	contentType ="application/x-www-form-urlencoded"
+	userAgent   = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36"
+	casUrl      = "https://cas.hdu.edu.cn/cas/login"
+	contentType = "application/x-www-form-urlencoded"
 )
 
 // cas认证会话
@@ -22,6 +22,7 @@ type Session struct {
 }
 
 func (s *Session) setSession() error {
+	// 本地debug使用
 	//cfg, err := ini.Load("config.ini")
 	//if err != nil {
 	//	return err
@@ -29,8 +30,9 @@ func (s *Session) setSession() error {
 	//s.user = cfg.Section("cas").Key("user").String()
 	//s.passwd = cfg.Section("cas").Key("passwd").String()
 
-	s.user=os.Args[1]
-	s.passwd=os.Args[2]
+	s.user = os.Args[1]
+	s.passwd = os.Args[2]
+
 	s.Request = req.New()
 
 	return nil
