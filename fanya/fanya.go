@@ -43,6 +43,7 @@ func (fy *fanya) Login(body string) error {
 		"User-Agent":   userAgent,
 		"Content-Type": contentType,
 	}, param)
+
 	if err != nil {
 		return err
 	}

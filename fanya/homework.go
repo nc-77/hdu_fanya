@@ -33,6 +33,7 @@ func (fy *fanya) GetHomeworks(courses []Course) error {
 		if err != nil {
 			return err
 		}
+
 		if err := getHwAtr(dom, &courses[i]); err != nil {
 			return err
 		}
@@ -66,6 +67,7 @@ func getHwAtr(dom *goquery.Document, course *Course) error {
 		if hw.Status == "待做" {
 			course.todo = true
 		}
+
 		course.Hw = append(course.Hw, *hw)
 	})
 

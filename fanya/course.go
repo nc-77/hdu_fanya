@@ -1,10 +1,12 @@
 package fanya
 
 import (
+	"github.com/PuerkitoBio/goquery"
 	"github.com/imroc/req"
+	"github.com/pkg/errors"
 	"html/template"
 	"os"
-	"regexp"
+	"strings"
 )
 
 type Course struct {
@@ -20,6 +22,7 @@ type Data struct {
 
 const (
 	courseUrl = "https://hdu.fanya.chaoxing.com/courselist/study"
+	cxurl     = "https://hdu.fanya.chaoxing.com"
 )
 
 func GetPage(courses []Course, file *os.File) error {
@@ -55,16 +58,26 @@ func (fy *fanya) GetCourses() ([]Course, error) {
 	if err != nil {
 		return nil, err
 	}
-	hrefComp := regexp.MustCompile("<a class=\"zmy_pic\"  target=\"_blank\"  href='(.+)' >")
-	coursesUrl := hrefComp.FindAllSubmatch(resp.Bytes(), -1)
-	nameComp := regexp.MustCompile("<dt name=\"courseNameHtml\">\n    \t\t\t\t\t\t\t(.+)")
-	coursesName := nameComp.FindAllSubmatch(resp.Bytes(), -1)
-	courses := make([]Course, len(coursesUrl))
-	for i := 0; i < len(coursesUrl); i++ {
-		courses[i].Name = string(coursesName[i][1])
-		courses[i].courseUrl = string(coursesUrl[i][1])
-		courses[i].todo = false
+
+	dom, err := goquery.NewDocumentFromReader(strings.NewReader(resp.String()))
+	if err != nil {
+		return nil, errors.WithMessage(err, "courses page to dom failed")
 	}
+	courses := make([]Course, 0)
+	dom.Find("li.zmy_item").Each(func(i int, selection *goquery.Selection) {
+		url, _ := selection.Find("a.zmy_pic").Attr("href")
+		courseName := selection.Find("dt[name=courseNameHtml]").Text()
+		courseName = strings.ReplaceAll(courseName, "\t", "")
+		courseName = strings.ReplaceAll(courseName, " ", "")
+		courseName = strings.ReplaceAll(courseName, "\n", "")
+		courses = append(courses, Course{
+			Name:      courseName,
+			courseUrl: cxurl + url,
+			hwUrl:     "",
+			todo:      false,
+			Hw:        nil,
+		})
+	})
 
 	return courses, nil
 }

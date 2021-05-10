@@ -27,6 +27,7 @@ func (s *Session) ServiceLogin(svc Service) error {
 	if err != nil {
 		return err
 	}
+
 	if err := svc.Login(resp.String()); err != nil {
 		return err
 	}
