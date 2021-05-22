@@ -2,6 +2,7 @@ package fanya
 
 import (
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/imroc/req"
 	"github.com/pkg/errors"
 	"learn/cas"
@@ -31,13 +32,17 @@ func (fy *fanya) GetServiceUrl() string {
 
 // 模拟提交表单
 func (fy *fanya) Login(body string) error {
+
 	param, err := fy.getParam(body)
 	if err != nil {
 		return err
 	}
 	// 取得表单提交url <form action="http://passport2.chaoxing.com/loginfanya?_t=1618921809233" method="post"  id="userLogin">
-	comp := regexp.MustCompile(fmt.Sprintf("<form action=\"(.+)\" method=\"post\"  id=\"userLogin\">"))
-	postUrl := comp.FindSubmatch([]byte(body))[1]
+	dom, err := goquery.NewDocumentFromReader(strings.NewReader(body))
+	if err != nil {
+		return errors.Wrap(err, "获取表单提交url失败")
+	}
+	postUrl, _ := dom.Find("#userLogin").Attr("action")
 
 	resp, err := fy.Session.Request.Post(string(postUrl), req.Header{
 		"User-Agent":   userAgent,
